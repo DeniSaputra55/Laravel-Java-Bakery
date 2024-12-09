@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdukController;
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +14,22 @@ use App\Http\Controllers\ProdukController;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
+
+// Route untuk halaman login
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+// Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Route untuk halaman home (setelah login)
+Route::get('/produk', [ProdukController::class, 'index'])->name('produk.index')->middleware('auth');
 
 //produk
 Route::get('/produk', [ProdukController::class, 'index']);

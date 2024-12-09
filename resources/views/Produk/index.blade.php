@@ -22,8 +22,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
+                <ul class="navbar-nav ms-auto">
+                    <!-- <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#home">Home</a>
                     </li>
                     <li class="nav-item">
@@ -34,8 +34,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logout-button">Logout</a>
                     </li>
-                </ul> -->
+
+                </ul>
             </div>
         </div>
     </nav>
@@ -143,6 +147,27 @@
     </footer>
     <!-- End Footer  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).on('click', '#logout-button', function(e) {
+            e.preventDefault(); // Mencegah tautan default
+
+            $.ajax({
+                url: "{{ route('logout') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    alert(response.message);
+                    window.location.href = "{{ route('login') }}"; // Redirect ke halaman login
+                },
+                error: function(xhr) {
+                    alert("Logout gagal, coba lagi.");
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
